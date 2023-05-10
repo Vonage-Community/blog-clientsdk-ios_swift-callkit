@@ -13,10 +13,6 @@ final class ProviderDelegate: NSObject {
         provider.setDelegate(self, queue: nil)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     static var providerConfiguration: CXProviderConfiguration = {
         let providerConfiguration = CXProviderConfiguration()
         providerConfiguration.maximumCallsPerCallGroup = 1
@@ -103,7 +99,6 @@ extension ProviderDelegate: CXProviderDelegate {
     
     func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
         VGVoiceClient.enableAudio(audioSession)
-        
     }
     
     func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {

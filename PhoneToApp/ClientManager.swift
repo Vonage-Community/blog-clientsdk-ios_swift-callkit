@@ -77,15 +77,6 @@ final class ClientManager: NSObject {
         }
     }
     
-    func logout() {
-        print("VPush: Logout")
-        client.deleteSession { error in
-            if error == nil {
-                self.delegate?.clientStatusUpdated(self, status: "Disconnected")
-            }
-        }
-    }
-    
     private func getJWT(completion: @escaping (String) -> Void) {
         let jwt = ""
         
@@ -107,7 +98,6 @@ final class ClientManager: NSObject {
                 }
             }
         }
-        
     }
     
     /*
@@ -138,20 +128,18 @@ final class ClientManager: NSObject {
     
     func reject(_ callID: String, completion: @escaping (Error?) -> Void) {
         let rejectAction = {
-            print("VPush: Hangup", callID)
+            print("VPush: Reject", callID)
             self.isActiveCall = false
             self.client.reject(callID, callback: completion)
         }
         
         if ongoingPushLogin {
-            print("VPush: Storing hangup")
+            print("VPush: Storing Reject")
             storedAction = rejectAction
         } else {
             rejectAction()
         }
     }
-    
-    // MARK:-  Private
     
     /*
      This function enabled push notifications with the client
