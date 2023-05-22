@@ -62,7 +62,7 @@ extension AppDelegate: PKPushRegistryDelegate {
      the client manager needs to remove it.
      */
     func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType) {
-        clientManager.invalidatePushToken()
+        clientManager.invalidatePushToken(nil)
     }
     
     /*
