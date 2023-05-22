@@ -151,7 +151,7 @@ final class ClientManager: NSObject {
     private func registerPushIfNeeded(with token: Data) {
         shouldRegisterToken(with: token) { shouldRegister in
             if shouldRegister {
-                self.client.registerDevicePushToken(token, userNotificationToken: Data()) { error, deviceId in
+                self.client.registerDevicePushToken(token, userNotificationToken: token) { error, deviceId in
                     if error == nil {
                         print("VPush: push token registered")
                         UserDefaults.standard.setValue(token, forKey: Constants.pushToken)
