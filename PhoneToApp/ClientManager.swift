@@ -32,8 +32,6 @@ final class ClientManager: NSObject {
     }
     
     private func initializeClient() {
-        let config = VGClientConfig(region: .US)
-        client.setConfig(config)
         client.delegate = self
     }
     
@@ -88,8 +86,8 @@ final class ClientManager: NSObject {
     }
     
     func invalidatePushToken(_ completion: (() -> Void)? = nil) {
-        print("VPush: Invalidate token")
         if let deviceId = UserDefaults.standard.object(forKey: Constants.deviceId) as? String {
+            print("VPush: Invalidate token")
             client.unregisterDeviceTokens(byDeviceId: deviceId) { error in
                 if error == nil {
                     self.pushToken = nil
@@ -151,7 +149,7 @@ final class ClientManager: NSObject {
     private func registerPushIfNeeded(with token: Data) {
         shouldRegisterToken(with: token) { shouldRegister in
             if shouldRegister {
-                self.client.registerDevicePushToken(token, userNotificationToken: token) { error, deviceId in
+                self.client.registerVoipToken(token, isSandbox: true) { error, deviceId in
                     if error == nil {
                         print("VPush: push token registered")
                         UserDefaults.standard.setValue(token, forKey: Constants.pushToken)
